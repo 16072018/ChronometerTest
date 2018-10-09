@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.nav_first_fragment:
-                selectedFragment = new FirstFragment();
+                selectedFragment = FirstFragment.newInstance(false);
                 break;
             case R.id.nav_second_fragment:
                 selectedFragment = new SecondFragment();

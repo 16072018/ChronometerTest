@@ -16,6 +16,16 @@ public class FirstFragment extends Fragment {
 
     private Activity activity;
 
+    public static FirstFragment newInstance(Boolean flag) {
+
+        Bundle args = new Bundle();
+        args.putBoolean("flag", flag);
+
+        FirstFragment fragment = new FirstFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onAttach(Context context) {
 
@@ -48,9 +58,11 @@ public class FirstFragment extends Fragment {
         chronometer.setFormat("%s");
         chronometer.setBase(SystemClock.elapsedRealtime());
 
-        //if (MainActivity.bundle.getBoolean("isRunning")) {
+        stopWatchHelper = new StopWatchHelper();
+
+        if( getArguments() == null ){
             startStopWatch();
-        //}
+        }
 
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +74,14 @@ public class FirstFragment extends Fragment {
             }
         });
 
+        view.findViewById(R.id.btnStart)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startStopWatch();
+                    }
+                });
+
         return view;
     }
 // ========================================= 메서드들 ===============================================
@@ -69,7 +89,7 @@ public class FirstFragment extends Fragment {
     private void startStopWatch() {
 
         // 스탑워치 헬퍼 클라스 객체 생성
-        stopWatchHelper = new StopWatchHelper();
+
 
         // 만약 Helper 클라스의 getStartTime()이 null이라면
         if (stopWatchHelper.getStartTime() == null) {
